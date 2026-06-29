@@ -17,6 +17,7 @@ public class EnemyBehavior : MonoBehaviour
     private EnemyState enemystates;
     private PlayerState playerStates;
     private Animator anim;
+    private bool isPressed = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
@@ -38,11 +39,22 @@ public class EnemyBehavior : MonoBehaviour
     void Update()
     {
         if (enemystates == EnemyState.Die) return;
-        // if (Keyboard.current.jKey.wasPressedThisFrame)
-        //{
+        if (Keyboard.current.jKey.wasPressedThisFrame)
+        {
+            isPressed = true;
+        }
+
         if (distanceFromPlayer < 1.2f) arrivedToPlayer = true;
-        MoveEnemy();
-        //}
+        
+        if (isPressed)
+        {
+            MoveEnemy(); 
+        }
+
+        if (transform.position == enemyOriginalPosition)
+        {
+            isPressed = false;
+        }
     }
 
     public void MoveEnemy()
@@ -120,6 +132,5 @@ public class EnemyBehavior : MonoBehaviour
     public void EnemyDie()
     {
         enemystates = EnemyState.Die;
-        enabled = false;
     }
 }

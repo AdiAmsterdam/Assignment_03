@@ -12,16 +12,11 @@ public class PlayerInRange : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            if (playerStates == PlayerState.Jab)
-            {
-                enemyBehavior.EnemyDie();
-                return;
-            }
-            enemyStates = EnemyState.Punch;
-            enemyBehavior.AnimationControl(enemyStates);
-            playerStates = PlayerState.Hurt;
-            playerControl.AnimationControl(playerStates);
-            playerHealth.TakeDamage();
+                enemyStates = EnemyState.Punch;
+                enemyBehavior.AnimationControl(enemyStates);
+                playerStates = PlayerState.Hurt;
+                playerControl.AnimationControl(playerStates);
+                playerHealth.TakeDamage();
         }
     }
 }

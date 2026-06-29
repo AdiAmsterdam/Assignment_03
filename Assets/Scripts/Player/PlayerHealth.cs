@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 public class PlayerHealth : MonoBehaviour
 {
     public HUD hud;
+    public GameOver gameOverScreen;
     public int health = 3;
     void Awake()
     {
@@ -25,6 +26,11 @@ public class PlayerHealth : MonoBehaviour
         if (Keyboard.current.kKey.wasPressedThisFrame && health > 0)
         {
             TakeDamage();
+        }
+
+        if (health <= 0)
+        {
+            gameOverScreen.GameOverScreen();
         }
     }
 
