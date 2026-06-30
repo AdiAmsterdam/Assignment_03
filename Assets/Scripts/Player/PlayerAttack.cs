@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 public class PlayerAttack : MonoBehaviour
 {
     private Animator anim;
-    private PlayerState playerStates;
+    public PlayerState playerStates;
     private PlayerMovement playerControl;
 
     void Awake()
@@ -27,7 +27,6 @@ public class PlayerAttack : MonoBehaviour
             playerStates = PlayerState.Jab;
             playerControl.AnimationControl(playerStates);
         }
-        else playerStates = PlayerState.Idle;
     }
     
     public bool IsJabAnimationFinished(string animationName)

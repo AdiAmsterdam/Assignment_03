@@ -3,17 +3,13 @@ using UnityEngine;
 
 public class EnemyInRange : MonoBehaviour
 {
-    PlayerState playerStates;
+    public PlayerAttack playerStates;
     private EnemyBehavior enemyBehavior;
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Enemy")
+        if (collision.CompareTag("Enemy") && playerStates.playerStates == PlayerState.Jab)
         {
-            if (playerStates == PlayerState.Jab)
-            {
                 enemyBehavior.EnemyDie();
-                return;
-            }
         }
     }
 }
