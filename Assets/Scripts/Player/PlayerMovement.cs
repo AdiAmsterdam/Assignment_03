@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private Animator anim;
+    private Animator animator;
     private PlayerState playerStates;
     private Vector3 originalScale;
     private PlayerAttack attack;
@@ -22,15 +22,20 @@ public class PlayerMovement : MonoBehaviour
 
     private void InitComponents()
     {
-        anim =  GetComponent<Animator>();
+        animator =  GetComponent<Animator>();
         attack = GetComponent<PlayerAttack>();
         originalScale = transform.localScale;
     }
 
     void Update()
     {
-        isWASD_Pressed = false;
         if (!attack.IsJabAnimationFinished("Jab")) return;
+        HandleMovementInput();
+    }
+
+    private void HandleMovementInput()
+    {
+        isWASD_Pressed = false;
         if (Keyboard.current.dKey.isPressed)
         {
             MovePlayer(1, 0);
@@ -61,7 +66,6 @@ public class PlayerMovement : MonoBehaviour
         {
             MovePlayer(0, 0);
         }
-        
     }
 
     private void MovePlayer(int horizontal, int vertical)
@@ -113,16 +117,16 @@ public class PlayerMovement : MonoBehaviour
         switch (playerState)
         {
             case PlayerState.Idle:
-                anim.SetBool(walkingTrigger, false);
+                animator.SetBool(walkingTrigger, false);
                 break;
             case PlayerState.Walk:
-                anim.SetBool(walkingTrigger, true);
+                animator.SetBool(walkingTrigger, true);
                 break;
             case PlayerState.Jab:
-                anim.SetTrigger(jabTrigger);
+                animator.SetTrigger(jabTrigger);
                 break;
             case PlayerState.Hurt:
-                anim.SetTrigger(hurtTrigger);
+                animator.SetTrigger(hurtTrigger);
                 break;
         }
     }

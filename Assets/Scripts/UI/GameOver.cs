@@ -3,7 +3,7 @@ using UnityEngine;
 public class GameOver : MonoBehaviour
 {
     private Canvas gameOver;
-    private PlayerMovement playerMovement;
+    public PlayerMovement playerMovement;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
@@ -12,7 +12,6 @@ public class GameOver : MonoBehaviour
 
     private void Init()
     {
-        playerMovement = GetComponent<PlayerMovement>();
         gameOver = GetComponent<Canvas>(); 
         gameOver.enabled = false;
     }
@@ -22,5 +21,6 @@ public class GameOver : MonoBehaviour
         Time.timeScale = 0;
         gameOver.enabled = true;
         playerMovement.enabled = false;
+        //disable character movement
     }
 }

@@ -16,7 +16,7 @@ public class EnemyBehavior : MonoBehaviour
     private Vector3 originalScale;
     private EnemyState enemystates;
     private PlayerState playerStates;
-    private Animator anim;
+    private Animator animator;
     private bool isPressed = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -27,7 +27,7 @@ public class EnemyBehavior : MonoBehaviour
     private void InitEnemy()
     {
         arrivedToPlayer = false;
-        anim = GetComponent<Animator>();
+        animator = GetComponent<Animator>();
         enemystates = EnemyState.Idle;
         originalScale = transform.localScale;
         enemyOriginalPosition = transform.position;
@@ -38,7 +38,17 @@ public class EnemyBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (enemystates == EnemyState.Die) return;
+        if (enemystates == EnemyState.Die)
+        {
+            enemystates = EnemyState.Die;
+            return;
+        }
+        //if (!IsPunchAnimationFinished("punch") && IsAttacking()) return;
+        HandleEnemyMovementInput();
+    }
+
+    private void HandleEnemyMovementInput()
+    {
         if (Keyboard.current.jKey.wasPressedThisFrame)
         {
             isPressed = true;
@@ -53,6 +63,7 @@ public class EnemyBehavior : MonoBehaviour
 
         if (transform.position == enemyOriginalPosition)
         {
+            enemystates = EnemyState.Idle;
             isPressed = false;
         }
     }
@@ -74,7 +85,6 @@ public class EnemyBehavior : MonoBehaviour
         }
         else
         {
-            if (!IsPunchAnimationFinished("punch")) return;
             enemystates = EnemyState.Walk;
             AnimationControl(enemystates);
             FlipEnemy(true);
@@ -105,32 +115,38 @@ public class EnemyBehavior : MonoBehaviour
         switch (enemyState)
         {
             case EnemyState.Idle:
-                anim.SetBool(walkingTrigger, false);
+                animator.SetBool(walkingTrigger, false);
                 break;
             case EnemyState.Walk:
-                anim.SetBool(walkingTrigger, true);
+                animator.SetBool(walkingTrigger, true);
                 break;
             case EnemyState.Punch:
-                anim.SetTrigger(punchTrigger);
+                animator.SetTrigger(punchTrigger);
                 break;
             case EnemyState.Die:
-                anim.SetTrigger(dyingTrigger);
+                animator.SetTrigger(dyingTrigger);
                 break;
         }
     }
     public bool IsPunchAnimationFinished(string animationName)
     {
-        AnimatorStateInfo info = anim.GetCurrentAnimatorStateInfo(0);
+        AnimatorStateInfo info = animator.GetCurrentAnimatorStateInfo(0);
         
         //if (!info.IsName(animationName)) return true;
         
-        if (info.normalizedTime >0.95f) return true;
+        if (info.normalizedTime >0.95f||!info.IsName(animationName)) return true;
         
         return false;
     }
 
+    public bool IsAttacking()
+    {
+        if (enemystates == EnemyState.Punch) return true;
+        return false;
+    }
     public void EnemyDie()
     {
         enemystates = EnemyState.Die;
+        enabled = false;
     }
 }

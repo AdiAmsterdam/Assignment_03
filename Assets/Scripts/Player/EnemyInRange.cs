@@ -1,13 +1,16 @@
+using System;
 using DefaultNamespace;
 using UnityEngine;
 
 public class EnemyInRange : MonoBehaviour
 {
-    public PlayerAttack playerStates;
-    private EnemyBehavior enemyBehavior;
+    public PlayerAttack playerAttack;
+    public EnemyBehavior enemyBehavior;
+    
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Enemy") && playerStates.playerStates == PlayerState.Jab)
+        if (collision.CompareTag("Enemy") && playerAttack.IsAttacking())
         {
                 enemyBehavior.EnemyDie();
         }

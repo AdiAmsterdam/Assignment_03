@@ -372,6 +372,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aae08a619253c79479e28d088a88582b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  playerMovement: {fileID: 1367432724}
 --- !u!114 &909099937
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -967,8 +968,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 6.753863e-16, y: -0.014393077}
-  m_Size: {x: 0.9999943, y: 2.3426178}
+  m_Offset: {x: 5.507462e-15, y: -0.11927218}
+  m_Size: {x: 0.9999921, y: 2.5523674}
   m_Direction: 0
 --- !u!212 &1644298710
 SpriteRenderer:
@@ -1068,7 +1069,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0f6a36497ec90e4da0f615b971ffee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyInRange
-  playerStates: {fileID: 1367432729}
+  playerAttack: {fileID: 1367432729}
+  enemyBehavior: {fileID: 1200038866}
 --- !u!1 &1739019461
 GameObject:
   m_ObjectHideFlags: 0
@@ -1488,6 +1490,7 @@ MonoBehaviour:
   playerHealth: {fileID: 1367432728}
   enemyBehavior: {fileID: 1200038866}
   playerControl: {fileID: 1367432724}
+  PlayerAttack: {fileID: 1367432729}
 --- !u!1 &2059004052
 GameObject:
   m_ObjectHideFlags: 0

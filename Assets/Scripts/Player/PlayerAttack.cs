@@ -4,9 +4,9 @@ using UnityEngine.InputSystem;
 
 public class PlayerAttack : MonoBehaviour
 {
-    private Animator anim;
+    private Animator animator;
     public PlayerState playerStates;
-    private PlayerMovement playerControl;
+    private PlayerMovement playerMovement;
 
     void Awake()
     {
@@ -15,28 +15,40 @@ public class PlayerAttack : MonoBehaviour
 
     private void InitComponents()
     {
-        anim = GetComponent<Animator>();
-        playerControl = GetComponent<PlayerMovement>();
+        animator = GetComponent<Animator>();
+        playerMovement = GetComponent<PlayerMovement>();
     }
 
     void Update()
     {
-        
+        HandleAttackInput();
+    }
+
+    private void HandleAttackInput()
+    {
         if (Mouse.current.leftButton.wasPressedThisFrame)
         {
             playerStates = PlayerState.Jab;
-            playerControl.AnimationControl(playerStates);
+            playerMovement.AnimationControl(playerStates);
         }
     }
-    
+
     public bool IsJabAnimationFinished(string animationName)
     {
-        AnimatorStateInfo info = anim.GetCurrentAnimatorStateInfo(0);
-        
+        AnimatorStateInfo info = animator.GetCurrentAnimatorStateInfo(0);
+       /* 
         if (!info.IsName(animationName)) return true;
         
         if (info.normalizedTime >0.95f) return true;
         
+        return false;
+        */
+       return !info.IsName(animationName) || info.normalizedTime > 0.95f;
+    }
+
+    public bool IsAttacking()
+    {
+        if(playerStates == PlayerState.Jab) return true;
         return false;
     }
 }

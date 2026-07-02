@@ -8,9 +8,10 @@ public class PlayerInRange : MonoBehaviour
     public PlayerHealth playerHealth;
     public EnemyBehavior enemyBehavior;
     public PlayerMovement playerControl;
+    public PlayerAttack PlayerAttack;
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Player") && !PlayerAttack.IsAttacking())
         {
                 enemyStates = EnemyState.Punch;
                 enemyBehavior.AnimationControl(enemyStates);
